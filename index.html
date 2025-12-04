@@ -42,7 +42,7 @@
       <div class="sidebar-info">
 
         <figure class="avatar-box">
-          <img src="./assets/images/my-avatar.png" alt="Hiren A. Vyas" width="80">
+          <img src="./assets/images/pht.png" alt="Hiren A. Vyas" width="80">
         </figure>
 
         <div class="info-content">
@@ -749,8 +749,8 @@
 
           <ul class="project-list">
 
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="https://play.google.com/store/apps/details?id=com.sonetel.sonetel2&pcampaignid=web_share">
+            <li class="project-item  active" data-filter-item data-category="web development" data-project-id="sonetel-mobile">
+              <a href="#" class="project-link" data-project-link>
 
                 <figure class="project-img">
                   <div class="project-item-icon-box">
@@ -767,8 +767,8 @@
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="https://sonetel.com/en/">
+            <li class="project-item  active" data-filter-item data-category="web development" data-project-id="sonetel-web">
+              <a href="#" class="project-link" data-project-link>
 
                 <figure class="project-img">
                   <div class="project-item-icon-box">
@@ -785,8 +785,8 @@
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="web design">
-              <a href="https://viewer.staging.bim.com.sg/">
+            <li class="project-item  active" data-filter-item data-category="web design" data-project-id="bimeco">
+              <a href="#" class="project-link" data-project-link>
 
                 <figure class="project-img">
                   <div class="project-item-icon-box">
@@ -803,8 +803,8 @@
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="applications">
-              <a href="https://play.google.com/store/apps/details?id=com.pronunciatorllc.bluebird&pcampaignid=web_share">
+            <li class="project-item  active" data-filter-item data-category="applications" data-project-id="bluebird">
+              <a href="#" class="project-link" data-project-link>
 
                 <figure class="project-img">
                   <div class="project-item-icon-box">
@@ -821,8 +821,8 @@
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="web design">
-              <a href="https://play.google.com/store/apps/details?id=net.hodltoken.hodlapp&pcampaignid=web_share">
+            <li class="project-item  active" data-filter-item data-category="web design" data-project-id="hodl">
+              <a href="#" class="project-link" data-project-link>
 
                 <figure class="project-img">
                   <div class="project-item-icon-box">
@@ -839,8 +839,8 @@
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="web design">
-              <a href="#">
+            <li class="project-item  active" data-filter-item data-category="web design" data-project-id="compose">
+              <a href="#" class="project-link" data-project-link>
 
                 <figure class="project-img">
                   <div class="project-item-icon-box">
@@ -917,6 +917,53 @@
 
       </article>
 
+
+
+
+
+      <!--
+        - #PROJECT DETAIL
+      -->
+
+      <article class="project-detail" data-page="project-detail">
+
+        <header>
+          <button class="back-btn" data-back-btn style="background: var(--onyx); border: 1px solid var(--jet); border-radius: 8px; padding: 8px 16px; color: var(--white-2); cursor: pointer; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+            <span>Back to Portfolio</span>
+          </button>
+          <h2 class="h2 article-title" data-project-detail-title>Project Title</h2>
+        </header>
+
+        <section class="project-detail-content">
+          
+          <div class="project-meta" style="margin-bottom: 20px;">
+            <p class="project-category" data-project-detail-category style="font-size: var(--fs-5); color: var(--orange-yellow-crayola); margin-bottom: 15px;">Category</p>
+          </div>
+
+          <div class="project-description" data-project-detail-description style="margin-bottom: 30px; color: var(--light-gray);">
+            <p style="color: var(--light-gray); font-size: var(--fs-6); font-weight: var(--fw-300); line-height: 1.6; margin-bottom: 15px;">
+              Project description will appear here.
+            </p>
+          </div>
+
+          <div class="project-technology" style="margin-bottom: 30px;">
+            <h3 class="h3" style="color: var(--white-2); margin-bottom: 15px; font-size: var(--fs-3);">Technologies Used</h3>
+            <ul class="technology-list" data-project-detail-technology style="display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0;">
+              <!-- Technology items will be added here -->
+            </ul>
+          </div>
+
+          <div class="project-link-wrapper" style="margin-top: 30px;">
+            <a href="#" target="_blank" class="contact-link" data-project-detail-link style="display: inline-flex; align-items: center; gap: 8px; color: var(--orange-yellow-crayola); font-size: var(--fs-5);">
+              <ion-icon name="open-outline"></ion-icon>
+              <span>View Project</span>
+            </a>
+          </div>
+
+        </section>
+
+      </article>
 
 
 
@@ -1145,6 +1192,8 @@
 
             <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
 
+            <div class="form-message" data-form-message style="margin-top: 15px; padding: 12px; border-radius: 8px; display: none; font-size: var(--fs-6);"></div>
+
             <button class="form-btn" type="submit" disabled data-form-btn>
               <ion-icon name="paper-plane"></ion-icon>
               <span>Send Message</span>
@@ -1164,6 +1213,11 @@
 
 
 
+
+  <!--
+    - EmailJS script
+  -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
   <!--
     - custom js link
