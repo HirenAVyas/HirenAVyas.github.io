@@ -101,31 +101,46 @@ const projectData = {
   }
 };
 
-// portfolio project navigation
-const projectLinks = document.querySelectorAll("[data-project-link]");
-const projectDetailPage = document.querySelector("[data-page='project-detail']");
-const portfolioPage = document.querySelector("[data-page='portfolio']");
-const backBtn = document.querySelector("[data-back-btn]");
+// portfolio project navigation - wrapped in DOMContentLoaded for GitHub Pages compatibility
+document.addEventListener("DOMContentLoaded", function() {
+  const projectLinks = document.querySelectorAll("[data-project-link]");
+  const projectDetailPage = document.querySelector("[data-page='project-detail']");
+  const portfolioPage = document.querySelector("[data-page='portfolio']");
+  const backBtn = document.querySelector("[data-back-btn]");
 
-// project detail elements
-const projectDetailTitle = document.querySelector("[data-project-detail-title]");
-const projectDetailCategory = document.querySelector("[data-project-detail-category]");
-const projectDetailDescription = document.querySelector("[data-project-detail-description]");
-const projectDetailTechnology = document.querySelector("[data-project-detail-technology]");
-const projectDetailLink = document.querySelector("[data-project-detail-link]");
+  // project detail elements
+  const projectDetailTitle = document.querySelector("[data-project-detail-title]");
+  const projectDetailCategory = document.querySelector("[data-project-detail-category]");
+  const projectDetailDescription = document.querySelector("[data-project-detail-description]");
+  const projectDetailTechnology = document.querySelector("[data-project-detail-technology]");
+  const projectDetailLink = document.querySelector("[data-project-detail-link]");
 
-// function to show project detail
-const showProjectDetail = function (projectId) {
-  const project = projectData[projectId];
-  
-  if (project) {
-    projectDetailTitle.innerHTML = project.title;
-    projectDetailCategory.innerHTML = project.category;
-    projectDetailDescription.innerHTML = "<p style=\"color: var(--light-gray); font-size: var(--fs-6); font-weight: var(--fw-300); line-height: 1.6; margin-bottom: 15px;\">" + project.description + "</p>";
-    projectDetailLink.href = project.link;
+  // Check if all required elements exist
+  if (!projectDetailPage || !portfolioPage || !backBtn || !projectDetailTitle || 
+      !projectDetailCategory || !projectDetailDescription || !projectDetailTechnology || 
+      !projectDetailLink) {
+    console.error("Project detail elements not found. Please check your HTML.");
+    return;
+  }
+
+  // function to show project detail
+  const showProjectDetail = function (projectId) {
+    const project = projectData[projectId];
+    
+    if (!project) {
+      console.error("Project not found:", projectId);
+      return;
+    }
+
+    if (projectDetailTitle) projectDetailTitle.innerHTML = project.title;
+    if (projectDetailCategory) projectDetailCategory.innerHTML = project.category;
+    if (projectDetailDescription) {
+      projectDetailDescription.innerHTML = "<p style=\"color: var(--light-gray); font-size: var(--fs-6); font-weight: var(--fw-300); line-height: 1.6; margin-bottom: 15px;\">" + project.description + "</p>";
+    }
+    if (projectDetailLink) projectDetailLink.href = project.link;
     
     // Display technologies
-    if (project.technologies && project.technologies.length > 0) {
+    if (projectDetailTechnology && project.technologies && project.technologies.length > 0) {
       projectDetailTechnology.innerHTML = "";
       project.technologies.forEach(tech => {
         const techItem = document.createElement("li");
@@ -136,53 +151,64 @@ const showProjectDetail = function (projectId) {
     }
     
     // Hide link if it's just "#"
-    if (project.link === "#") {
-      projectDetailLink.style.display = "none";
-    } else {
-      projectDetailLink.style.display = "inline-flex";
+    if (projectDetailLink) {
+      if (project.link === "#") {
+        projectDetailLink.style.display = "none";
+      } else {
+        projectDetailLink.style.display = "inline-flex";
+      }
     }
     
     // Hide all pages and show project detail
+    const pages = document.querySelectorAll("[data-page]");
     pages.forEach(page => {
       page.classList.remove("active");
     });
-    projectDetailPage.classList.add("active");
+    if (projectDetailPage) projectDetailPage.classList.add("active");
     
     // Update nav links
+    const navigationLinks = document.querySelectorAll("[data-nav-link]");
     navigationLinks.forEach(link => {
       link.classList.remove("active");
     });
     
     window.scrollTo(0, 0);
-  }
-};
+  };
 
-// add click event to all project links
-for (let i = 0; i < projectLinks.length; i++) {
-  projectLinks[i].addEventListener("click", function (e) {
-    e.preventDefault();
-    const projectItem = this.closest("[data-project-id]");
-    const projectId = projectItem.dataset.projectId;
-    showProjectDetail(projectId);
-  });
-}
-
-// back button functionality
-backBtn.addEventListener("click", function () {
-  // Hide project detail and show portfolio
-  projectDetailPage.classList.remove("active");
-  portfolioPage.classList.add("active");
-  
-  // Update nav links
-  navigationLinks.forEach(link => {
-    if (link.innerHTML.toLowerCase() === "portfolio") {
-      link.classList.add("active");
-    } else {
-      link.classList.remove("active");
+  // add click event to all project links
+  if (projectLinks && projectLinks.length > 0) {
+    for (let i = 0; i < projectLinks.length; i++) {
+      projectLinks[i].addEventListener("click", function (e) {
+        e.preventDefault();
+        const projectItem = this.closest("[data-project-id]");
+        if (projectItem && projectItem.dataset.projectId) {
+          const projectId = projectItem.dataset.projectId;
+          showProjectDetail(projectId);
+        }
+      });
     }
-  });
-  
-  window.scrollTo(0, 0);
+  }
+
+  // back button functionality
+  if (backBtn) {
+    backBtn.addEventListener("click", function () {
+      // Hide project detail and show portfolio
+      if (projectDetailPage) projectDetailPage.classList.remove("active");
+      if (portfolioPage) portfolioPage.classList.add("active");
+      
+      // Update nav links
+      const navigationLinks = document.querySelectorAll("[data-nav-link]");
+      navigationLinks.forEach(link => {
+        if (link.innerHTML.toLowerCase() === "portfolio") {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+      
+      window.scrollTo(0, 0);
+    });
+  }
 });
 
 
@@ -266,10 +292,10 @@ const EMAILJS_SERVICE_ID = "service_ep8b8x9";
 const EMAILJS_TEMPLATE_ID = "template_gg07nwa";
 const EMAILJS_PUBLIC_KEY = "JU_UAdzD7dNOTFebV";
 
-// Initialize EmailJS
-(function() {
+// Initialize EmailJS (only if emailjs is loaded)
+if (typeof emailjs !== 'undefined') {
   emailjs.init(EMAILJS_PUBLIC_KEY);
-})();
+}
 
 // Function to show message
 const showFormMessage = function(message, isError = false) {
@@ -356,6 +382,7 @@ for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function () {
 
     // Hide project detail page if it's active
+    const projectDetailPage = document.querySelector("[data-page='project-detail']");
     if (projectDetailPage) {
       projectDetailPage.classList.remove("active");
     }
