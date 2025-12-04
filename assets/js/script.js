@@ -162,14 +162,20 @@ document.addEventListener("DOMContentLoaded", function() {
     // Hide all pages and show project detail
     const pages = document.querySelectorAll("[data-page]");
     pages.forEach(page => {
-      page.classList.remove("active");
+      if (page && page.classList) {
+        page.classList.remove("active");
+      }
     });
-    if (projectDetailPage) projectDetailPage.classList.add("active");
+    if (projectDetailPage && projectDetailPage.classList) {
+      projectDetailPage.classList.add("active");
+    }
     
     // Update nav links
     const navigationLinks = document.querySelectorAll("[data-nav-link]");
     navigationLinks.forEach(link => {
-      link.classList.remove("active");
+      if (link && link.classList) {
+        link.classList.remove("active");
+      }
     });
     
     window.scrollTo(0, 0);
@@ -193,16 +199,22 @@ document.addEventListener("DOMContentLoaded", function() {
   if (backBtn) {
     backBtn.addEventListener("click", function () {
       // Hide project detail and show portfolio
-      if (projectDetailPage) projectDetailPage.classList.remove("active");
-      if (portfolioPage) portfolioPage.classList.add("active");
+      if (projectDetailPage && projectDetailPage.classList) {
+        projectDetailPage.classList.remove("active");
+      }
+      if (portfolioPage && portfolioPage.classList) {
+        portfolioPage.classList.add("active");
+      }
       
       // Update nav links
       const navigationLinks = document.querySelectorAll("[data-nav-link]");
       navigationLinks.forEach(link => {
-        if (link.innerHTML.toLowerCase() === "portfolio") {
-          link.classList.add("active");
-        } else {
-          link.classList.remove("active");
+        if (link && link.classList) {
+          if (link.innerHTML && link.innerHTML.toLowerCase().trim() === "portfolio") {
+            link.classList.add("active");
+          } else {
+            link.classList.remove("active");
+          }
         }
       });
       
@@ -373,30 +385,55 @@ form.addEventListener("submit", function(e) {
 
 
 
-// page navigation variables
-const navigationLinks = document.querySelectorAll("[data-nav-link]");
-const pages = document.querySelectorAll("[data-page]");
+// page navigation - wrapped in DOMContentLoaded for GitHub Pages compatibility
+document.addEventListener("DOMContentLoaded", function() {
+  const navigationLinks = document.querySelectorAll("[data-nav-link]");
+  const pages = document.querySelectorAll("[data-page]");
 
-// add event to all nav link
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
+  // Check if elements exist
+  if (!navigationLinks || navigationLinks.length === 0 || !pages || pages.length === 0) {
+    console.error("Navigation elements not found");
+    return;
+  }
 
-    // Hide project detail page if it's active
-    const projectDetailPage = document.querySelector("[data-page='project-detail']");
-    if (projectDetailPage) {
-      projectDetailPage.classList.remove("active");
-    }
+  // add event to all nav link
+  for (let i = 0; i < navigationLinks.length; i++) {
+    if (!navigationLinks[i]) continue;
+    
+    navigationLinks[i].addEventListener("click", function () {
 
-    for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
-        pages[i].classList.add("active");
-        navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
+      // Hide project detail page if it's active
+      const projectDetailPage = document.querySelector("[data-page='project-detail']");
+      if (projectDetailPage && projectDetailPage.classList) {
+        projectDetailPage.classList.remove("active");
       }
-    }
 
-  });
-}
+      const clickedPageName = this.innerHTML.toLowerCase().trim();
+      
+      // Update all pages
+      for (let j = 0; j < pages.length; j++) {
+        if (pages[j] && pages[j].dataset && pages[j].dataset.page && pages[j].classList) {
+          if (clickedPageName === pages[j].dataset.page) {
+            pages[j].classList.add("active");
+          } else {
+            pages[j].classList.remove("active");
+          }
+        }
+      }
+      
+      // Update all navigation links
+      for (let j = 0; j < navigationLinks.length; j++) {
+        if (navigationLinks[j] && navigationLinks[j].classList) {
+          if (j === i) {
+            navigationLinks[j].classList.add("active");
+          } else {
+            navigationLinks[j].classList.remove("active");
+          }
+        }
+      }
+      
+      window.scrollTo(0, 0);
+
+    });
+  }
+});
