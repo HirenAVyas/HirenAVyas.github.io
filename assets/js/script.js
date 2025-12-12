@@ -57,6 +57,13 @@ overlay.addEventListener("click", testimonialsModalFunc);
 
 // project data
 const projectData = {
+  "silo-mobile": {
+    title: "SILO",
+    category: "Mobile App development",
+    description: "SILO delivers a fresh set of five computer science definitions every day, helping you learn new concepts effortlessly. Each day brings new terms to explore, understand, and grow your knowledge. You can easily save the definitions you find useful and share them with friends, classmates, or colleagues. With SILO, staying updated with CS terminology becomes simple, engaging, and convenient.",
+    technologies: ["React Native", "JavaScript"],
+    link: "https://play.google.com/store/apps/details?id=hiren.a.vyas.silo&pcampaignid=web_share"
+  },
   "sonetel-mobile": {
     title: "Sonetel",
     category: "Mobile App development",
