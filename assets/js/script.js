@@ -194,9 +194,13 @@ document.addEventListener("DOMContentLoaded", function() {
       projectLinks[i].addEventListener("click", function (e) {
         e.preventDefault();
         const projectItem = this.closest("[data-project-id]");
-        if (projectItem && projectItem.dataset.projectId) {
-          const projectId = projectItem.dataset.projectId;
-          showProjectDetail(projectId);
+        if (projectItem) {
+          const projectId = projectItem.getAttribute("data-project-id");
+          if (projectId) {
+            showProjectDetail(projectId);
+          } else {
+            console.error("Project ID not found for project item");
+          }
         }
       });
     }
